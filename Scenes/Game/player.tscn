@@ -1,0 +1,159 @@
+[gd_scene load_steps=23 format=3 uid="uid://ceaei4g3qhblx"]
+
+[ext_resource type="Texture2D" uid="uid://bi0j74huu13w3" path="res://Assets/Textures/Player/Character/Hammer Swing Sheet.png" id="1_kw5xc"]
+[ext_resource type="Texture2D" uid="uid://boi5mnfop2c8j" path="res://Assets/Textures/Player/Character/Idle Sheet.png" id="2_bgppe"]
+[ext_resource type="Texture2D" uid="uid://btt6h7im4v180" path="res://Assets/Textures/Player/Character/Pickaxe Swing Sheet.png" id="3_tej82"]
+[ext_resource type="Texture2D" uid="uid://bny4lga28f7nb" path="res://Assets/Textures/Player/Character/Run Sheet.png" id="4_ed3t2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a18xc"]
+atlas = ExtResource("1_kw5xc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqyfb"]
+atlas = ExtResource("1_kw5xc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mca3"]
+atlas = ExtResource("1_kw5xc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5qp3"]
+atlas = ExtResource("1_kw5xc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2imf"]
+atlas = ExtResource("2_bgppe")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mciqv"]
+atlas = ExtResource("2_bgppe")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_provt"]
+atlas = ExtResource("2_bgppe")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4avuq"]
+atlas = ExtResource("2_bgppe")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0c1sd"]
+atlas = ExtResource("3_tej82")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6c5tj"]
+atlas = ExtResource("3_tej82")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkugx"]
+atlas = ExtResource("3_tej82")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aj4ma"]
+atlas = ExtResource("3_tej82")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sqxj"]
+atlas = ExtResource("4_ed3t2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85af7"]
+atlas = ExtResource("4_ed3t2")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76l12"]
+atlas = ExtResource("4_ed3t2")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aepdt"]
+atlas = ExtResource("4_ed3t2")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pcwp6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a18xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqyfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mca3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5qp3")
+}],
+"loop": true,
+"name": &"Hammer Swing",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2imf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mciqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_provt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4avuq")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0c1sd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6c5tj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkugx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aj4ma")
+}],
+"loop": true,
+"name": &"Pickaxe Swing",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sqxj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85af7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76l12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aepdt")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w71em"]
+size = Vector2(11, 16)
+
+[node name="Player" type="CharacterBody2D"]
+texture_filter = 3
+collision_layer = 2
+collision_mask = 7
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_pcwp6")
+animation = &"Hammer Swing"
+frame_progress = 0.0814954
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_w71em")
