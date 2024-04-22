@@ -3,6 +3,7 @@ extends TileMap
 @onready
 var falling_debris_scene: PackedScene = preload("res://Scenes/Projectiles/FallingDebris.tscn")
 @onready var fall_timer: Timer = $WaveFallTimer
+@onready var dirt_cursor_sprite: Sprite2D = $DirtCursor
 var cave_state_update
 
 const NULL_TILE_SOURCE_ID = -1
@@ -36,15 +37,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# Update cave state if actions have occurred
 	if cave_state_update:
-		var loose_dirt_tiles = find_loose_dirt_tiles()
-		for tile_coord in loose_dirt_tiles:
-			var support_factor = calculate_support_factor(tile_coord)
-			if support_factor < support_factor_threshold:
-				set_cell(0, tile_coord, NULL_TILE_SOURCE_ID)
-				queued_tiles_to_fall.append(tile_coord)
-				fall_timer.start()
-
+		update_cave_state()
 		cave_state_update = false
+	
+	draw_mouse_interaction_cursor()
 
 
 func _on_falling_debris_body_entered(body: Node, debris_node: Node2D):
@@ -57,6 +53,22 @@ func _on_falling_debris_body_entered(body: Node, debris_node: Node2D):
 			DIRT_TILE_SPAWN_ATLAS_COORDS
 		)
 		debris_node.queue_free()
+
+
+func draw_mouse_interaction_cursor():
+	var tile_pos = local_to_map(to_local(get_global_mouse_position()))
+	
+	dirt_cursor_sprite.position = map_to_local(tile_pos)
+
+
+func update_cave_state():
+	var loose_dirt_tiles = find_loose_dirt_tiles()
+	for tile_coord in loose_dirt_tiles:
+		var support_factor = calculate_support_factor(tile_coord)
+		if support_factor < support_factor_threshold:
+			set_cell(0, tile_coord, NULL_TILE_SOURCE_ID)
+			queued_tiles_to_fall.append(tile_coord)
+			fall_timer.start()
 
 
 func find_loose_dirt_tiles() -> Array[Vector2i]:
@@ -160,3 +172,20 @@ func draw_debug_coordinates():
 		debug_coordinate_node.theme = preload("res://Assets/Themes/debug_text.tres")
 		debug_coordinate_node.autowrap_mode = TextServer.AUTOWRAP_OFF
 		add_child(debug_coordinate_node)
+
+
+func _on_player_player_action_activated(action: Player.Actions) -> void:
+	match action:
+		Player.Actions.PICKAXE:
+			handle_action_dig()
+		Player.Actions.HAMMER:
+			handle_action_build()
+
+
+func handle_action_dig():
+	var selected_tile_pos = local_to_map(to_local(get_global_mouse_position()))
+	set_cell(0, selected_tile_pos, NULL_TILE_SOURCE_ID)
+
+
+func handle_action_build():
+	pass
