@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://bp203syto4fi5"]
+
+[ext_resource type="Texture2D" uid="uid://dabh1m4pq3gbj" path="res://Assets/Textures/Keep/Smith/Dwarf - Smith-Sheet.png" id="1_1knh8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6j3oq"]
+radius = 46.0435
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yelom"]
+atlas = ExtResource("1_1knh8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5j2u"]
+atlas = ExtResource("1_1knh8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpitl"]
+atlas = ExtResource("1_1knh8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ji4ix"]
+atlas = ExtResource("1_1knh8")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtitj"]
+atlas = ExtResource("1_1knh8")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqmma"]
+atlas = ExtResource("1_1knh8")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv88p"]
+atlas = ExtResource("1_1knh8")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08hy8"]
+atlas = ExtResource("1_1knh8")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_arhqx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yelom")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5j2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpitl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ji4ix")
+}],
+"loop": true,
+"name": &"Hammer",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtitj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqmma")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mv88p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08hy8")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Smithy" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("CircleShape2D_6j3oq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_arhqx")
+animation = &"Idle"
