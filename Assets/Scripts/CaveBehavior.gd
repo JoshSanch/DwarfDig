@@ -6,6 +6,7 @@ var cave_state_update
 
 const NULL_TILE_SOURCE_ID = -1
 const DIRT_TILE_SOURCE_ID = 2
+const DIRT_TILE_SPAWN_ATLAS_COORDS = Vector2i(1, 10)
 const SUPPORT_TILE_SOURCE_ID = 1
 const STATIC_TILE_SOURCE_ID = 0
 const STATIC_TILE_ATLAS_COORDS = Vector2i(1, 1)
@@ -45,7 +46,7 @@ func _process(delta: float) -> void:
 
 func _on_falling_debris_area_entered(body: Node):
 	var tile_coord = local_to_map(to_local(body.global_position))
-	set_cell(0, tile_coord, DIRT_TILE_SOURCE_ID)
+	set_cell(0, Vector2i(tile_coord.x, tile_coord.y - 1), DIRT_TILE_SOURCE_ID, DIRT_TILE_SPAWN_ATLAS_COORDS)
 	
 
 func find_loose_dirt_tiles() -> Array[Vector2i]:
@@ -70,12 +71,14 @@ func is_loose_dirt_tile(tile_coords: Vector2i):
 func trigger_queued_falls():
 	for tile_coords in queued_tiles_to_fall:
 		# set_cell(0, tile_coords, 0, Vector2i(3, 0))
-		var falling_sprite_node: RigidBody2D = falling_debris_scene.instantiate(DUPLICATE_SIGNALS | DUPLICATE_USE_INSTANTIATION) as RigidBody2D
+		var falling_sprite_node: RigidBody2D = falling_debris_scene.instantiate() as RigidBody2D
 		falling_sprite_node.global_position = to_global(map_to_local(tile_coords))
 		falling_sprite_node.process_mode = Node.PROCESS_MODE_ALWAYS
 		falling_sprite_node.visible = true
 		add_child(falling_sprite_node)
 		falling_sprite_node.get_node("Area2D").area_entered.connect(_on_falling_debris_area_entered)
+	
+	queued_tiles_to_fall = []
 
 
 func calculate_support_factor(tile_coords: Vector2i):
@@ -115,3 +118,14 @@ func calculate_vertical_support_factor(tile_coords):
 			horizontal_support_factor += horizontal_support_weights[abs(horizontal_index - tile_coords.x)]
 	
 	return horizontal_support_factor
+
+
+func draw_debug_coordinates():
+	for tile_coords in get_used_cells(0):
+		var debug_coordinate_node = RichTextLabel.new()
+		debug_coordinate_node.position = to_global(map_to_local(tile_coords))
+		debug_coordinate_node.text = str(tile_coords)
+		debug_coordinate_node.visible = true
+		debug_coordinate_node.z_index = 99
+		debug_coordinate_node.fit_content = true
+		add_child(debug_coordinate_node)

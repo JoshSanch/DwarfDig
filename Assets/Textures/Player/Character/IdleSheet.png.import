@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c850n5lm5woxq"
-path="res://.godot/imported/Player miniDwarf final.png-cddd6bfe44ef0cc2f12826ed323666a3.ctex"
+uid="uid://boi5mnfop2c8j"
+path="res://.godot/imported/IdleSheet.png-10638a0f7621ab0be6827e8e24ce8403.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Player/Character/Player miniDwarf final.png"
-dest_files=["res://.godot/imported/Player miniDwarf final.png-cddd6bfe44ef0cc2f12826ed323666a3.ctex"]
+source_file="res://Assets/Textures/Player/Character/IdleSheet.png"
+dest_files=["res://.godot/imported/IdleSheet.png-10638a0f7621ab0be6827e8e24ce8403.ctex"]
 
 [params]
 

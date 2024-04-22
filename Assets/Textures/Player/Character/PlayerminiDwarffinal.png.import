@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btt6h7im4v180"
-path="res://.godot/imported/Pickaxe Swing Sheet.png-4fb38f1a669173ba5207e270f0b4679d.ctex"
+uid="uid://c850n5lm5woxq"
+path="res://.godot/imported/PlayerminiDwarffinal.png-788b0d495aa3f1bd1a788c9d7399a52c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Player/Character/Pickaxe Swing Sheet.png"
-dest_files=["res://.godot/imported/Pickaxe Swing Sheet.png-4fb38f1a669173ba5207e270f0b4679d.ctex"]
+source_file="res://Assets/Textures/Player/Character/PlayerminiDwarffinal.png"
+dest_files=["res://.godot/imported/PlayerminiDwarffinal.png-788b0d495aa3f1bd1a788c9d7399a52c.ctex"]
 
 [params]
 
