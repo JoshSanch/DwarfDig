@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://c45vh8sb253f7"]
+[gd_scene load_steps=4 format=3 uid="uid://c45vh8sb253f7"]
 
 [ext_resource type="PackedScene" uid="uid://dk7ja5p2c7amy" path="res://Scenes/Game/CavePlayableArea.tscn" id="1_4mcgk"]
 [ext_resource type="PackedScene" uid="uid://ceaei4g3qhblx" path="res://Scenes/Game/player.tscn" id="2_e1nlq"]
+[ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="3_chju0"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node"]
 
 [node name="CavePlayableArea" parent="." instance=ExtResource("1_4mcgk")]
 
 [node name="Player" parent="." instance=ExtResource("2_e1nlq")]
-position = Vector2(199, 182)
+position = Vector2(216, 179)
+script = ExtResource("3_chju0")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(4, 4)
