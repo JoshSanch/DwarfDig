@@ -506,7 +506,7 @@ script = ExtResource("2_66kby")
 support_factor_threshold = 18
 
 [node name="WaveFallTimer" type="Timer" parent="."]
-wait_time = 1.106
+wait_time = 2.196
 one_shot = true
 
 [connection signal="timeout" from="WaveFallTimer" to="." method="_on_wave_fall_timer_timeout"]
