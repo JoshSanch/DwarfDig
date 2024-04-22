@@ -11,15 +11,14 @@ config_version=5
 [application]
 
 config/name="Dwarf Dig"
-run/main_scene="res://Scenes/Game/CavePlayableArea.tscn"
+run/main_scene="res://Scenes/gameroot.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
 
 window/size/viewport_width=1024
-window/size/window_width_override=1440
-window/size/window_height_override=1080
+window/stretch/mode="viewport"
 
 [layer_names]
 
