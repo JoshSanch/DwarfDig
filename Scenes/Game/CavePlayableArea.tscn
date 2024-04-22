@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dk7ja5p2c7amy"]
+[gd_scene load_steps=10 format=3 uid="uid://dk7ja5p2c7amy"]
 
 [ext_resource type="Texture2D" uid="uid://cceo1pi8i8bd0" path="res://Assets/Textures/Environment/Dirt Tiles w bg.png" id="1_omjrb"]
 [ext_resource type="Script" path="res://Assets/Scripts/CaveBehavior.gd" id="2_66kby"]
 [ext_resource type="Texture2D" uid="uid://ytd7ib6qmc5" path="res://Assets/Textures/Actions/Cave Support.png" id="2_ouqg4"]
 [ext_resource type="Texture2D" uid="uid://73fufhor3xxc" path="res://Assets/Textures/Environment/Dirt Tiles 2.png" id="3_qb8gv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r4bfg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_klhx6"]
 texture = ExtResource("1_omjrb")
@@ -491,6 +493,7 @@ texture = ExtResource("3_qb8gv")
 [sub_resource type="TileSet" id="TileSet_w51lg"]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 7
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_r4bfg")
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Big Terrain"
 terrain_set_0/terrain_0/color = Color(1, 1, 1, 1)

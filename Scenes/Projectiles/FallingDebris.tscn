@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://cwqcyq5q3nxgh" path="res://Assets/Textures/Environment/Falling Dirt Mound.png" id="1_cqpvu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rj7at"]
-size = Vector2(28, 25)
+size = Vector2(11, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yexs5"]
-size = Vector2(28, 25)
+size = Vector2(11, 13)
 
 [node name="FallingDebris" type="RigidBody2D"]
 texture_filter = 1
@@ -19,13 +19,14 @@ collision_mask = 7
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 1.5)
+position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_rj7at")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_cqpvu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1.5)
+position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_yexs5")
 disabled = true
