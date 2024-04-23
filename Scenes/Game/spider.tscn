@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://c78je50om6cuf"]
+
+[ext_resource type="Texture2D" uid="uid://bww0b25k0p0s4" path="res://Assets/Textures/Spider/SpiderBaby death-Sheet.png" id="1_u3c10"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oje1x"]
+size = Vector2(12, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hhnc"]
+atlas = ExtResource("1_u3c10")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14kf5"]
+atlas = ExtResource("1_u3c10")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqp8s"]
+atlas = ExtResource("1_u3c10")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ltxp"]
+atlas = ExtResource("1_u3c10")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yg76x"]
+load_path = "res://.godot/imported/SpiderBaby-Sheet.png-9e8ed56d7223d0a8e01fdf764b62e888.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xk7de"]
+atlas = SubResource("CompressedTexture2D_yg76x")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7w0t"]
+atlas = SubResource("CompressedTexture2D_yg76x")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phexd"]
+atlas = SubResource("CompressedTexture2D_yg76x")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rh8ei"]
+atlas = SubResource("CompressedTexture2D_yg76x")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7npk1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3hhnc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14kf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqp8s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ltxp")
+}],
+"loop": true,
+"name": &"Death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk7de")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7w0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phexd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rh8ei")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
+}]
+
+[node name="Spider" type="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_oje1x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_7npk1")
+animation = &"Death"
