@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CollectableMaterial" load_steps=3 format=3 uid="uid://mslejv4aw57w"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/ResourceClasses/CollectibleMaterial.gd" id="1_62udt"]
+
+[sub_resource type="Curve" id="Curve_de5x3"]
+_data = [Vector2(0.448889, 0.208791), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[resource]
+script = ExtResource("1_62udt")
+randomize_rotation = false
+max_spawn_rate = 0.1
+spawn_limits = SubResource("Curve_de5x3")

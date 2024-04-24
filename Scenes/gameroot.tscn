@@ -1,19 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://c45vh8sb253f7"]
+[gd_scene load_steps=9 format=3 uid="uid://c45vh8sb253f7"]
 
 [ext_resource type="PackedScene" uid="uid://dk7ja5p2c7amy" path="res://Scenes/Game/CavePlayableArea.tscn" id="1_4mcgk"]
+[ext_resource type="Resource" uid="uid://bwc8vme4f4dfs" path="res://Assets/MaterialParameters/Wood.tres" id="2_di6c4"]
 [ext_resource type="PackedScene" uid="uid://ceaei4g3qhblx" path="res://Scenes/Game/player.tscn" id="2_e1nlq"]
+[ext_resource type="Resource" uid="uid://c70coaav3i1o3" path="res://Assets/MaterialParameters/Stone.tres" id="3_b0trj"]
+[ext_resource type="PackedScene" uid="uid://1a1ffxx3h8d" path="res://Scenes/Game/dwarven_keep.tscn" id="3_munqa"]
+[ext_resource type="Resource" uid="uid://xggmf654ppay" path="res://Assets/MaterialParameters/Gold.tres" id="4_xj1av"]
+[ext_resource type="Resource" uid="uid://mslejv4aw57w" path="res://Assets/MaterialParameters/Coal.tres" id="5_cwmoe"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0pq4g"]
+noise_type = 0
 
 [node name="Game" type="Node"]
 
 [node name="CavePlayableArea" parent="." instance=ExtResource("1_4mcgk")]
-horizontal_support_weights = [0, 1, 3]
-vertical_support_weights = [0, 5, 3, 1]
-world_support_weight = 20
+materials_resources = Array[Resource("res://Assets/Scripts/ResourceClasses/CollectibleMaterial.gd")]([ExtResource("2_di6c4"), ExtResource("3_b0trj"), ExtResource("4_xj1av"), ExtResource("5_cwmoe")])
+noise = SubResource("FastNoiseLite_0pq4g")
 
 [node name="Player" parent="." instance=ExtResource("2_e1nlq")]
 position = Vector2(138, 100)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(4, 4)
+zoom = Vector2(2.72, 2.72)
 
+[node name="DwarvenKeep" parent="." instance=ExtResource("3_munqa")]
+position = Vector2(320, -112)
+
+[connection signal="resource_collected" from="CavePlayableArea" to="Player" method="_on_cave_playable_area_resource_collected"]
 [connection signal="player_action_activated" from="Player" to="CavePlayableArea" method="_on_player_player_action_activated"]

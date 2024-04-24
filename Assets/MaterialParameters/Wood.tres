@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CollectableMaterial" load_steps=3 format=3 uid="uid://bwc8vme4f4dfs"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/ResourceClasses/CollectibleMaterial.gd" id="1_jk5n1"]
+
+[sub_resource type="Curve" id="Curve_uocog"]
+_data = [Vector2(0, 0.8), 0.0, 0.0, 0, 0, Vector2(0.29999, 0.5), 0.0, 0.0, 0, 0, Vector2(0.3, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+metadata/_snap_enabled = true
+
+[resource]
+script = ExtResource("1_jk5n1")
+randomize_rotation = false
+max_spawn_rate = 0.1
+spawn_limits = SubResource("Curve_uocog")
