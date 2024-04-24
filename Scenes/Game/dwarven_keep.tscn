@@ -9,6 +9,7 @@
 size = Vector2(94, 27)
 
 [node name="DwarvenKeep" type="RigidBody2D"]
+z_index = -1
 lock_rotation = true
 
 [node name="Keep" type="Sprite2D" parent="."]
