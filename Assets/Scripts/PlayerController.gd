@@ -16,6 +16,12 @@ const action_animations = {
 @onready var sprite_node: AnimatedSprite2D = $AnimatedSprite2D
 @onready var active_action: Actions = Actions.PICKAXE
 @onready var is_mouse_in_action_radius = false
+@onready var materials_inventory = {
+	PlayArea.CollectibleMaterials.WOOD: 0,
+	PlayArea.CollectibleMaterials.STONE: 0,
+	PlayArea.CollectibleMaterials.GOLD: 0,
+	PlayArea.CollectibleMaterials.COAL: 0
+}
 
 @export var SPEED = 300.0
 @export var JUMP_VELOCITY = -400.0
@@ -81,3 +87,8 @@ func _on_action_radius_mouse_entered() -> void:
 
 func _on_action_radius_mouse_exited() -> void:
 	is_mouse_in_action_radius = false
+
+
+func _on_cave_playable_area_resource_collected(material_collected: PlayArea.CollectibleMaterials) -> void:
+	materials_inventory[material_collected] += 1
+	print(materials_inventory)
