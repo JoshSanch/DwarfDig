@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4hav846gytf4"]
+[gd_scene load_steps=6 format=3 uid="uid://1a1ffxx3h8d"]
 
 [ext_resource type="Texture2D" uid="uid://bnuxt0y6tfb67" path="res://Assets/Textures/Keep/Dwarven Hall - Empty.png" id="1_55too"]
 [ext_resource type="Texture2D" uid="uid://crxuts7xaykcg" path="res://Assets/Textures/Keep/King on Throne.png" id="2_1ir85"]
 [ext_resource type="Texture2D" uid="uid://d4ijrvuhv6yln" path="res://Assets/Textures/Keep/Smithy Shop Empty.png" id="3_5kp7p"]
-[ext_resource type="PackedScene" uid="uid://bp203syto4fi5" path="res://Scenes/Game/smithy.tscn" id="4_hp5ci"]
+[ext_resource type="PackedScene" path="res://Scenes/Game/smithy.tscn" id="4_hp5ci"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_71iqc"]
 size = Vector2(94, 27)
