@@ -22,11 +22,15 @@ const SUPPORT_TILE_SOURCE_ID = 1
 const STATIC_TILE_SOURCE_ID = 0
 const STATIC_TILE_ATLAS_COORDS = Vector2i(1, 1)
 
-const MATERIAL_ATLAS_MAP: Dictionary = {
+const MATERIAL_ATLAS_MAP := {
 	CollectibleMaterials.WOOD: 3,
 	CollectibleMaterials.STONE: 4,
 	CollectibleMaterials.GOLD: 5,
 	CollectibleMaterials.COAL: 6
+}
+const BUILDINGS_SOURCE_ID_MAP := {
+	Player.Actions.BUILD_ROPE: 7,
+	Player.Actions.BUILD_SUPPORT: 1
 }
 
 @export var horizontal_support_weights = [0, 1, 3]
@@ -195,8 +199,8 @@ func _on_player_player_action_activated(action: Player.Actions) -> void:
 	match action:
 		Player.Actions.PICKAXE:
 			handle_action_dig()
-		Player.Actions.HAMMER:
-			handle_action_build()
+		Player.Actions.BUILD_SUPPORT, Player.Actions.BUILD_ROPE:
+			handle_action_build(action)
 
 
 func handle_action_dig():
@@ -215,8 +219,12 @@ func handle_action_dig():
 		set_cell(1, selected_tile_pos, NULL_TILE_SOURCE_ID)
 
 
-func handle_action_build():
-	pass
+func handle_action_build(action: Player.Actions):
+	var selected_tile_pos = local_to_map(to_local(get_global_mouse_position()))
+	if get_cell_source_id(0, selected_tile_pos) != NULL_TILE_SOURCE_ID:
+		return  # Can't build on non-empty tiles
+
+	print("this is where I'd build if I could")
 
 
 func generate_terrain():
