@@ -1,9 +1,16 @@
+class_name PlayArea
 extends TileMap
+signal resource_collected(material_collected: CollectibleMaterials)
+
+enum CollectibleMaterials { WOOD, STONE, GOLD, COAL }
 
 @onready
 var falling_debris_scene: PackedScene = preload("res://Scenes/Projectiles/FallingDebris.tscn")
 @onready var fall_timer: Timer = $WaveFallTimer
 @onready var dirt_cursor_sprite: Sprite2D = $DirtCursor
+@onready var queued_tiles_to_fall: Array[Vector2i] = []
+@onready var world_size := self.get_used_rect()
+
 var cave_state_update
 
 const NULL_TILE_SOURCE_ID = -1
@@ -15,12 +22,20 @@ const SUPPORT_TILE_SOURCE_ID = 1
 const STATIC_TILE_SOURCE_ID = 0
 const STATIC_TILE_ATLAS_COORDS = Vector2i(1, 1)
 
+const MATERIAL_ATLAS_MAP: Dictionary = {
+	CollectibleMaterials.WOOD: 3,
+	CollectibleMaterials.STONE: 4,
+	CollectibleMaterials.GOLD: 5,
+	CollectibleMaterials.COAL: 6
+}
+
 @export var horizontal_support_weights = [0, 1, 3]
 @export var vertical_support_weights = [0, 5, 3, 1]
 @export var world_support_weight = 20
 @export var support_factor_threshold = 16
-
-var queued_tiles_to_fall: Array[Vector2i] = []
+@export var mat_spawn_threshold := 0.25
+@export var materials_resources: Array[CollectableMaterial] = []
+@export var noise: FastNoiseLite
 
 
 func _on_wave_fall_timer_timeout() -> void:
@@ -30,6 +45,8 @@ func _on_wave_fall_timer_timeout() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	generate_terrain()
+
 	cave_state_update = true
 
 
@@ -39,7 +56,7 @@ func _process(delta: float) -> void:
 	if cave_state_update:
 		update_cave_state()
 		cave_state_update = false
-	
+
 	draw_mouse_interaction_cursor()
 
 
@@ -57,7 +74,7 @@ func _on_falling_debris_body_entered(body: Node, debris_node: Node2D):
 
 func draw_mouse_interaction_cursor():
 	var tile_pos = local_to_map(to_local(get_global_mouse_position()))
-	
+
 	dirt_cursor_sprite.position = map_to_local(tile_pos)
 
 
@@ -186,6 +203,50 @@ func handle_action_dig():
 	var selected_tile_pos = local_to_map(to_local(get_global_mouse_position()))
 	set_cell(0, selected_tile_pos, NULL_TILE_SOURCE_ID)
 
+	# Collect materials present at tile position
+	var mined_material_tile_source_id = get_cell_source_id(1, selected_tile_pos)
+	if mined_material_tile_source_id != NULL_TILE_SOURCE_ID:
+		var mined_material: CollectibleMaterials
+		for collectible_material in MATERIAL_ATLAS_MAP:
+			if MATERIAL_ATLAS_MAP[collectible_material] == mined_material_tile_source_id:
+				mined_material = collectible_material
+
+		resource_collected.emit(mined_material)
+		set_cell(1, selected_tile_pos, NULL_TILE_SOURCE_ID)
+
 
 func handle_action_build():
 	pass
+
+
+func generate_terrain():
+	noise.seed = randi()
+	var cave_size := get_used_rect().size
+	for y in cave_size.y:
+		for x in cave_size.x:
+			if get_cell_source_id(0, Vector2i(x, y)) != DIRT_TILE_SOURCE_ID:
+				continue
+
+			if noise.get_noise_2d(x, y) + 1 >= mat_spawn_threshold:
+				place_collectable_material(x, y)
+
+
+func place_collectable_material(cell_col, cell_row):
+	# Iterate through minerals, from the rarest to least rare.
+	var i := CollectibleMaterials.COAL as int
+	while i >= CollectibleMaterials.WOOD:
+		if _check_set(i, cell_col, cell_row):
+			return
+		i -= 1
+
+
+func _check_set(collectible_material: CollectibleMaterials, x: int, y: int) -> bool:
+	var cave_size := get_used_rect().size
+	if materials_resources[collectible_material].can_spawn(y, cave_size.y):
+		if materials_resources[collectible_material].randomize_rotation:
+			set_cell(1, Vector2i(x, y), MATERIAL_ATLAS_MAP[collectible_material], Vector2i(0, 0))
+			# TODO: ROTATE!
+		else:
+			set_cell(1, Vector2i(x, y), MATERIAL_ATLAS_MAP[collectible_material], Vector2i(0, 0))
+		return true
+	return false
