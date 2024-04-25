@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dk7ja5p2c7amy"]
+[gd_scene load_steps=21 format=3 uid="uid://dk7ja5p2c7amy"]
 
 [ext_resource type="Texture2D" uid="uid://cceo1pi8i8bd0" path="res://Assets/Textures/Environment/Dirt Tiles w bg.png" id="1_omjrb"]
 [ext_resource type="Script" path="res://Assets/Scripts/CaveBehavior.gd" id="2_66kby"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bokkmwiggj0r6" path="res://Assets/Textures/Environment/Highlighted Tile(1).png" id="5_01jyy"]
 [ext_resource type="Texture2D" uid="uid://cytj21pllr4kf" path="res://Assets/Textures/Materials/Material - Stone.png" id="5_f3o40"]
 [ext_resource type="Texture2D" uid="uid://cnott5t8hv0fc" path="res://Assets/Textures/Materials/Material - Gold Ore.png" id="6_occ1i"]
+[ext_resource type="Texture2D" uid="uid://d0wu2rjy5iajp" path="res://Assets/Textures/Actions/Actions - Descending Rope 16x.png" id="8_ypadk"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r4bfg"]
 
@@ -496,28 +497,72 @@ texture = ExtResource("3_qb8gv")
 5:12/0/terrains_peering_bit/top_side = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6v307"]
+resource_name = "Wood"
 texture = ExtResource("4_7bywp")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_swyyc"]
+resource_name = "Stone"
 texture = ExtResource("5_f3o40")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ff3ip"]
+resource_name = "Gold"
 texture = ExtResource("6_occ1i")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13usl"]
+resource_name = "Coal"
 texture = ExtResource("4_x66mp")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ylf1h"]
+resource_name = "Rope"
+texture = ExtResource("8_ypadk")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0 = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+0:2/0 = 0
+0:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:2/0/physics_layer_0/angular_velocity = 0.0
+1:2/0 = 0
+1:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:2/0/physics_layer_0/angular_velocity = 0.0
+0:3/0 = 0
+0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:3/0/physics_layer_0/angular_velocity = 0.0
+1:3/0 = 0
+1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:3/0/physics_layer_0/angular_velocity = 0.0
+0:4/0 = 0
+0:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:4/0/physics_layer_0/angular_velocity = 0.0
+1:4/0 = 0
+1:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:4/0/physics_layer_0/angular_velocity = 0.0
+0:5/0 = 0
+0:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:5/0/physics_layer_0/angular_velocity = 0.0
+1:5/0 = 0
+1:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:5/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSet" id="TileSet_w51lg"]
 physics_layer_0/collision_layer = 1
@@ -533,6 +578,7 @@ sources/4 = SubResource("TileSetAtlasSource_swyyc")
 sources/6 = SubResource("TileSetAtlasSource_13usl")
 sources/3 = SubResource("TileSetAtlasSource_6v307")
 sources/5 = SubResource("TileSetAtlasSource_ff3ip")
+sources/7 = SubResource("TileSetAtlasSource_ylf1h")
 
 [node name="PlayableArea" type="TileMap"]
 tile_set = SubResource("TileSet_w51lg")
