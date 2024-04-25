@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/gameroot.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameMusicPlayer="*res://Scenes/Music/game_music_player.tscn"
+
 [display]
 
 window/size/viewport_width=1024

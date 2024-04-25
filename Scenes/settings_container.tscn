@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://0t6veblj2edq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqtsc"]
+bg_color = Color(0.156863, 0.117647, 0.14902, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.137255, 0.101961, 0.12549, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_aay0n"]
+font_size = 30
+font_color = Color(0.984314, 0.898039, 0.419608, 1)
+shadow_color = Color(0, 0, 0, 0.992157)
+
+[node name="SettingsContainer" type="PanelContainer"]
+auto_translate_mode = 1
+visible = false
+offset_left = 636.0
+offset_top = 191.0
+offset_right = 1012.0
+offset_bottom = 374.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bqtsc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+text = "Volume"
+label_settings = SubResource("LabelSettings_aay0n")
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+min_value = -30.0
+max_value = 10.0
+value = -10.0
+
+[node name="Spacer" type="VBoxContainer" parent="VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+auto_translate_mode = 1
+modulate = Color(0.984314, 0.898039, 0.419608, 1)
+layout_mode = 2
+text = "Close"

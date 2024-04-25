@@ -4,4 +4,5 @@
 
 [node name="GameMusicPlayer" type="AudioStreamPlayer"]
 stream = ExtResource("1_lr4ps")
+volume_db = -10.0
 autoplay = true
