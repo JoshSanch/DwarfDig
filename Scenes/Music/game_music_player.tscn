@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceclr6jo8oq2d"]
+
+[ext_resource type="AudioStream" uid="uid://cd330sorptdmj" path="res://Assets/Sounds/8bit-music-for-game.wav" id="1_lr4ps"]
+
+[node name="GameMusicPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_lr4ps")
+autoplay = true
