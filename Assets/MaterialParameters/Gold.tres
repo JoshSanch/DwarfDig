@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/ResourceClasses/CollectibleMaterial.gd" id="1_wm7bl"]
 
 [sub_resource type="Curve" id="Curve_yxfbo"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497778, 0), 0.0, 0.0, 0, 0, Vector2(0.76, 0.318681), 1.03022, 1.03022, 0, 0, Vector2(1, 0.472527), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497778, 0), 0.0, 0.0, 0, 0, Vector2(0.777228, 0.10989), 1.03022, 1.03022, 0, 0, Vector2(1, 0.164835), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [resource]
