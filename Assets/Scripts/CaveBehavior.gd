@@ -9,6 +9,7 @@ var falling_debris_scene: PackedScene = preload("res://Scenes/Projectiles/Fallin
 @onready var fall_timer: Timer = $WaveFallTimer
 @onready var dirt_cursor_sprite: Sprite2D = $DirtCursor
 @onready var queued_tiles_to_fall: Array[Vector2i] = []
+@onready var active_rope_end_tiles: Array[Vector2i] = []
 @onready var world_size := self.get_used_rect()
 
 var cave_state_update
@@ -21,12 +22,19 @@ const MATERIAL_TILE_LAYER = 1
 const SUPPORT_TILE_SOURCE_ID = 1
 const STATIC_TILE_SOURCE_ID = 0
 const STATIC_TILE_ATLAS_COORDS = Vector2i(1, 1)
+const ROPE_SOURCE_ID = 7
+const ROPE_ATLAS_INFINITE_COORD = Vector2i(0, 1)
+const ROPE_ATLAS_FLOOR_COORD = Vector2i(0, 2)
 
-const MATERIAL_ATLAS_MAP: Dictionary = {
+const MATERIAL_ATLAS_MAP := {
 	CollectibleMaterials.WOOD: 3,
 	CollectibleMaterials.STONE: 4,
 	CollectibleMaterials.GOLD: 5,
 	CollectibleMaterials.COAL: 6
+}
+const BUILDINGS_SOURCE_ID_MAP := {
+	Player.Actions.BUILD_ROPE: 7,
+	Player.Actions.BUILD_SUPPORT: 1
 }
 
 @export var horizontal_support_weights = [0, 1, 3]
@@ -195,8 +203,8 @@ func _on_player_player_action_activated(action: Player.Actions) -> void:
 	match action:
 		Player.Actions.PICKAXE:
 			handle_action_dig()
-		Player.Actions.HAMMER:
-			handle_action_build()
+		Player.Actions.BUILD_SUPPORT, Player.Actions.BUILD_ROPE:
+			handle_action_build(action)
 
 
 func handle_action_dig():
@@ -215,8 +223,57 @@ func handle_action_dig():
 		set_cell(1, selected_tile_pos, NULL_TILE_SOURCE_ID)
 
 
-func handle_action_build():
-	pass
+func handle_action_build(action: Player.Actions):
+	var selected_tile_pos = local_to_map(to_local(get_global_mouse_position()))
+	if get_cell_source_id(0, selected_tile_pos) != NULL_TILE_SOURCE_ID:
+		return  # Can't build on non-empty tiles
+
+	if (can_build(action, selected_tile_pos)):
+		place_building(action, selected_tile_pos)
+
+
+func can_build(action: Player.Actions, base_build_pos: Vector2i):
+	if action == Player.Actions.BUILD_SUPPORT:
+		var support_tiles := tile_set.get_source(SUPPORT_TILE_SOURCE_ID) as TileSetAtlasSource
+		var support_atlas_grid_size = support_tiles.get_atlas_grid_size()
+		for x_offset in range(support_atlas_grid_size.x):
+			for y_offset in range(support_atlas_grid_size.y):
+				# Build starts from bottom left of atlas
+				var offset_coords := Vector2i(base_build_pos.x + x_offset, base_build_pos.y - y_offset)
+				if get_cell_source_id(0, offset_coords) != NULL_TILE_SOURCE_ID:
+					print_debug("Cannot build support, blocked at %s" % offset_coords)
+					return false
+	elif action == Player.Actions.BUILD_ROPE:
+		if get_cell_source_id(0, Vector2i(base_build_pos.x, base_build_pos.y + 1)) != NULL_TILE_SOURCE_ID:
+			print_debug("Cannot build rope at %s" % base_build_pos)
+			return false
+
+	return true
+
+
+func place_building(action: Player.Actions, base_build_pos: Vector2i):
+	if action == Player.Actions.BUILD_SUPPORT:
+		var support_tiles := tile_set.get_source(SUPPORT_TILE_SOURCE_ID) as TileSetAtlasSource
+		var support_atlas_grid_size = support_tiles.get_atlas_grid_size()
+		
+		# This math is so ugly I'm sorry, but it works :(
+		for x_offset in range(support_atlas_grid_size.x):
+			for y_offset in range(support_atlas_grid_size.y - 1, -1, -1):
+				# Build starts from bottom left of atlas
+				var offset_coords := Vector2i(base_build_pos.x + x_offset, base_build_pos.y + y_offset - 1)
+				set_cell(0, offset_coords, SUPPORT_TILE_SOURCE_ID, Vector2i(x_offset, y_offset))
+	elif action == Player.Actions.BUILD_ROPE:
+		var current_cell := base_build_pos
+		set_cell(0, current_cell, ROPE_SOURCE_ID, Vector2i(0,0))
+		
+		current_cell = Vector2i(current_cell.x, current_cell.y + 1)
+		while get_cell_source_id(0, current_cell) == NULL_TILE_SOURCE_ID:
+			var tile_atlas_coord := ROPE_ATLAS_INFINITE_COORD
+			if get_cell_source_id(0, Vector2i(current_cell.x, current_cell.y + 1)) != NULL_TILE_SOURCE_ID:
+				tile_atlas_coord = ROPE_ATLAS_FLOOR_COORD
+			
+			set_cell(0, current_cell, ROPE_SOURCE_ID, tile_atlas_coord)
+			current_cell = Vector2i(current_cell.x, current_cell.y + 1)
 
 
 func generate_terrain():
