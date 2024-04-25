@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c45vh8sb253f7"]
+[gd_scene load_steps=11 format=3 uid="uid://c45vh8sb253f7"]
 
 [ext_resource type="PackedScene" uid="uid://dk7ja5p2c7amy" path="res://Scenes/Game/CavePlayableArea.tscn" id="1_4mcgk"]
 [ext_resource type="Resource" uid="uid://bwc8vme4f4dfs" path="res://Assets/MaterialParameters/Wood.tres" id="2_di6c4"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://xggmf654ppay" path="res://Assets/MaterialParameters/Gold.tres" id="4_xj1av"]
 [ext_resource type="Resource" uid="uid://mslejv4aw57w" path="res://Assets/MaterialParameters/Coal.tres" id="5_cwmoe"]
 [ext_resource type="PackedScene" uid="uid://c6cb2gkf7xxf1" path="res://Scenes/RootUI.tscn" id="8_63vrn"]
+[ext_resource type="Texture2D" uid="uid://cnott5t8hv0fc" path="res://Assets/Textures/Materials/Material - Gold Ore.png" id="8_afutp"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0pq4g"]
 noise_type = 0
@@ -20,13 +21,40 @@ materials_resources = Array[Resource("res://Assets/Scripts/ResourceClasses/Colle
 noise = SubResource("FastNoiseLite_0pq4g")
 
 [node name="Player" parent="." instance=ExtResource("2_e1nlq")]
-position = Vector2(433, -78)
+position = Vector2(593, -78)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2.72, 2.72)
 
 [node name="DwarvenKeep" parent="." instance=ExtResource("3_munqa")]
-position = Vector2(320, -112)
+position = Vector2(480, -112)
+
+[node name="KingsGoldDisplay" type="Control" parent="DwarvenKeep"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 171.0
+offset_top = -62.0
+offset_right = 211.0
+offset_bottom = -22.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DwarvenKeep/KingsGoldDisplay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="DwarvenKeep/KingsGoldDisplay/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_afutp")
+stretch_mode = 3
+
+[node name="Label" type="RichTextLabel" parent="DwarvenKeep/KingsGoldDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "0/3"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="RootUi" parent="." instance=ExtResource("8_63vrn")]
 
