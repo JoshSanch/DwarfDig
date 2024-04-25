@@ -233,18 +233,19 @@ func _on_player_player_action_activated(action: Player.Actions) -> void:
 
 func handle_action_dig():
 	var selected_tile_pos = local_to_map(to_local(get_global_mouse_position()))
-	set_cell(0, selected_tile_pos, NULL_TILE_SOURCE_ID)
+	if get_cell_source_id(0, selected_tile_pos) != ROPE_SOURCE_ID:
+		set_cell(0, selected_tile_pos, NULL_TILE_SOURCE_ID)
 
-	# Collect materials present at tile position
-	var mined_material_tile_source_id = get_cell_source_id(1, selected_tile_pos)
-	if mined_material_tile_source_id != NULL_TILE_SOURCE_ID:
-		var mined_material: CollectibleMaterials
-		for collectible_material in MATERIAL_ATLAS_MAP:
-			if MATERIAL_ATLAS_MAP[collectible_material] == mined_material_tile_source_id:
-				mined_material = collectible_material
+		# Collect materials present at tile position
+		var mined_material_tile_source_id = get_cell_source_id(1, selected_tile_pos)
+		if mined_material_tile_source_id != NULL_TILE_SOURCE_ID:
+			var mined_material: CollectibleMaterials
+			for collectible_material in MATERIAL_ATLAS_MAP:
+				if MATERIAL_ATLAS_MAP[collectible_material] == mined_material_tile_source_id:
+					mined_material = collectible_material
 
-		resource_collected.emit(mined_material)
-		set_cell(1, selected_tile_pos, NULL_TILE_SOURCE_ID)
+			resource_collected.emit(mined_material)
+			set_cell(1, selected_tile_pos, NULL_TILE_SOURCE_ID)
 
 
 func handle_action_build(action: Player.Actions):
