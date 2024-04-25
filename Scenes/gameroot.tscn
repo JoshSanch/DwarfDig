@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c45vh8sb253f7"]
+[gd_scene load_steps=10 format=3 uid="uid://c45vh8sb253f7"]
 
 [ext_resource type="PackedScene" uid="uid://dk7ja5p2c7amy" path="res://Scenes/Game/CavePlayableArea.tscn" id="1_4mcgk"]
 [ext_resource type="Resource" uid="uid://bwc8vme4f4dfs" path="res://Assets/MaterialParameters/Wood.tres" id="2_di6c4"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://1a1ffxx3h8d" path="res://Scenes/Game/dwarven_keep.tscn" id="3_munqa"]
 [ext_resource type="Resource" uid="uid://xggmf654ppay" path="res://Assets/MaterialParameters/Gold.tres" id="4_xj1av"]
 [ext_resource type="Resource" uid="uid://mslejv4aw57w" path="res://Assets/MaterialParameters/Coal.tres" id="5_cwmoe"]
+[ext_resource type="PackedScene" uid="uid://ceclr6jo8oq2d" path="res://Scenes/Music/game_music_player.tscn" id="8_tdvil"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0pq4g"]
 noise_type = 0
@@ -25,6 +26,9 @@ zoom = Vector2(2.72, 2.72)
 
 [node name="DwarvenKeep" parent="." instance=ExtResource("3_munqa")]
 position = Vector2(320, -112)
+
+[node name="GameMusicPlayer" parent="." instance=ExtResource("8_tdvil")]
+volume_db = -10.0
 
 [connection signal="resource_collected" from="CavePlayableArea" to="Player" method="_on_cave_playable_area_resource_collected"]
 [connection signal="player_action_activated" from="Player" to="CavePlayableArea" method="_on_player_player_action_activated"]
