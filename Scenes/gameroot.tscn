@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c45vh8sb253f7"]
+[gd_scene load_steps=30 format=3 uid="uid://c45vh8sb253f7"]
 
 [ext_resource type="PackedScene" uid="uid://dk7ja5p2c7amy" path="res://Scenes/Game/CavePlayableArea.tscn" id="1_4mcgk"]
 [ext_resource type="Resource" uid="uid://bwc8vme4f4dfs" path="res://Assets/MaterialParameters/Wood.tres" id="2_di6c4"]
@@ -13,10 +13,11 @@
 [ext_resource type="Resource" uid="uid://mslejv4aw57w" path="res://Assets/MaterialParameters/Coal.tres" id="5_cwmoe"]
 [ext_resource type="Texture2D" uid="uid://cytj21pllr4kf" path="res://Assets/Textures/Materials/Material - Stone.png" id="6_0xmlq"]
 [ext_resource type="Texture2D" uid="uid://d0ebxwycvp7ug" path="res://Assets/Textures/Materials/Material - Coal.png" id="8_17htk"]
-[ext_resource type="PackedScene" uid="uid://c6cb2gkf7xxf1" path="res://Scenes/RootUI.tscn" id="8_63vrn"]
+[ext_resource type="PackedScene" path="res://Scenes/RootUI.tscn" id="8_63vrn"]
 [ext_resource type="Texture2D" uid="uid://cnott5t8hv0fc" path="res://Assets/Textures/Materials/Material - Gold Ore.png" id="8_afutp"]
 [ext_resource type="Texture2D" uid="uid://d0wu2rjy5iajp" path="res://Assets/Textures/Actions/Actions - Descending Rope 16x.png" id="9_j6sro"]
 [ext_resource type="Script" path="res://Assets/Scripts/GoldController.gd" id="16_uv5tl"]
+[ext_resource type="PackedScene" uid="uid://daf3riyoffq3u" path="res://Scenes/win_screen.tscn" id="17_brbxi"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r4bfg"]
 
@@ -801,6 +802,7 @@ offset_top = -174.0
 offset_right = 691.0
 offset_bottom = -134.0
 script = ExtResource("16_uv5tl")
+win_screen_scene = ExtResource("17_brbxi")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="KingsGoldDisplay"]
 layout_mode = 0
@@ -828,4 +830,5 @@ autowrap_mode = 0
 [connection signal="inventory_updated" from="Player" to="RootUi" method="_on_player_inventory_updated"]
 [connection signal="player_action_activated" from="Player" to="CavePlayableArea" method="_on_player_player_action_activated"]
 [connection signal="player_selected_action_updated" from="Player" to="RootUi" method="_on_player_player_selected_action_updated"]
+[connection signal="action_upgrade_dispensed" from="DwarvenKeep" to="Player" method="_on_dwarven_keep_action_upgrade_dispensed"]
 [connection signal="player_entered_king_area" from="DwarvenKeep" to="KingsGoldDisplay" method="_on_dwarven_keep_player_entered_king_area"]

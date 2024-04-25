@@ -88,14 +88,16 @@ func draw_mouse_interaction_cursor():
 
 func update_cave_state():
 	update_rope_bottoms()
-	var loose_dirt_tiles = find_loose_dirt_tiles()
-	for tile_coord in loose_dirt_tiles:
-		var support_factor = calculate_support_factor(tile_coord)
-		if support_factor < support_factor_threshold:
-			print_debug(tile_coord)
-			set_cell(0, tile_coord, NULL_TILE_SOURCE_ID)
-			queued_tiles_to_fall.append(tile_coord)
-			fall_timer.start()
+	
+	# TODO: Debug cave-ins
+	#var loose_dirt_tiles = find_loose_dirt_tiles()
+	#for tile_coord in loose_dirt_tiles:
+#		var support_factor = calculate_support_factor(tile_coord)
+#		if support_factor < support_factor_threshold:
+#			print_debug(tile_coord)
+#			set_cell(0, tile_coord, NULL_TILE_SOURCE_ID)
+#			queued_tiles_to_fall.append(tile_coord)
+#			fall_timer.start()
 
 
 func update_rope_bottoms():

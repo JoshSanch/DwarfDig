@@ -2,7 +2,8 @@ extends Node
 
 @onready var gold_deposited := 0
 
-@export var gold_required := 3
+@export var win_screen_scene: PackedScene
+@export var gold_required := 5
 
 
 func _ready() -> void:
@@ -19,4 +20,4 @@ func _on_dwarven_keep_player_entered_king_area(player: CharacterBody2D) -> void:
 
 
 func trigger_game_end():
-	pass
+	get_tree().change_scene_to_packed(win_screen_scene)

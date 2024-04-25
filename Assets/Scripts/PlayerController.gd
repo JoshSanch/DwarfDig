@@ -19,6 +19,7 @@ const action_animations = {
 @onready var sprite_node: AnimatedSprite2D = $AnimatedSprite2D
 @onready var selected_action: Actions = Actions.PICKAXE
 @onready var active_action = null
+@onready var upgraded_actions := []
 @onready var is_mouse_in_action_radius = false
 @onready var materials_inventory = {
 	PlayArea.CollectibleMaterials.WOOD: 0,
@@ -31,6 +32,9 @@ const action_animations = {
 @export var SPEED = 300.0
 @export var JUMP_VELOCITY = -400.0
 @export var CLIMB_SPEED = 200
+@export var crafting_requirements = {
+	Actions.BUILD_ROPE: [PlayArea.CollectibleMaterials.WOOD, 2]
+}
 
 
 func _ready() -> void:
@@ -39,12 +43,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	update_selected_action()
-	if is_mouse_in_action_radius and Input.is_action_pressed("action_contextual") and active_action == null:
-		player_action_activated.emit(selected_action)
-		active_action = selected_action
+	if is_mouse_in_action_radius and Input.is_action_pressed("action_contextual"):
+		handle_actions(selected_action)
 	
 	handle_animation_state()
-
 
 func _physics_process(delta: float) -> void:
 	if on_climbable_surface:
@@ -68,6 +70,38 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+
+func handle_actions(selected_action: Actions):
+	match selected_action:
+		Actions.BUILD_ROPE:
+			if active_action == null:
+				var requirements = crafting_requirements[selected_action]
+				var required_material = requirements[0]
+				var required_quantity = requirements[1]
+				
+				if materials_inventory[required_material] < required_quantity:
+					return
+				
+				materials_inventory[required_material] -= required_quantity
+				inventory_updated.emit(self)
+				
+				player_action_activated.emit(selected_action)
+				active_action = selected_action
+				return
+		Actions.BUILD_SUPPORT:
+			if active_action == null:
+				player_action_activated.emit(selected_action)
+				active_action = selected_action
+				return
+		Actions.PICKAXE:
+			if selected_action in upgraded_actions:
+				player_action_activated.emit(selected_action)
+				active_action = selected_action
+			elif active_action == null:
+				player_action_activated.emit(selected_action)
+				active_action = selected_action
+			return
 
 
 func update_selected_action():
@@ -139,3 +173,7 @@ func _on_ladder_radius_body_exited(body: Node2D) -> void:
 func update_inventory(material: PlayArea.CollectibleMaterials, count: int):
 	materials_inventory[material] = count
 	inventory_updated.emit(self)
+
+
+func _on_dwarven_keep_action_upgrade_dispensed(action: Player.Actions) -> void:
+	upgraded_actions.append(action)
