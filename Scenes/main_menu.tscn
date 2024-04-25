@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://bixm4j0auksss"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/main_menu.gd" id="1_0dux7"]
+[ext_resource type="Texture2D" uid="uid://28oyn6a481x8" path="res://Assets/Textures/UI/Main Menu.png" id="1_h714b"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0dux7")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_h714b")
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 446.0
+offset_top = 222.0
+offset_right = 578.0
+offset_bottom = 294.0
+flat = true
+
+[node name="SettingsButton" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 398.0
+offset_top = 304.0
+offset_right = 626.0
+offset_bottom = 374.0
+flat = true
+
+[node name="QuitButton" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 442.0
+offset_top = 384.0
+offset_right = 582.0
+offset_bottom = 454.0
+flat = true
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
