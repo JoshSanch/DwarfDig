@@ -3,6 +3,7 @@ class_name Player
 extends CharacterBody2D
 signal player_action_activated(action: Actions)
 signal player_selected_action_updated(action: Actions)
+signal inventory_updated(player: CharacterBody2D)
 
 enum Actions {
 	PICKAXE,
@@ -30,6 +31,10 @@ const action_animations = {
 @export var SPEED = 300.0
 @export var JUMP_VELOCITY = -400.0
 @export var CLIMB_SPEED = 200
+
+
+func _ready() -> void:
+	inventory_updated.emit(self)
 
 
 func _process(delta: float) -> void:
@@ -120,6 +125,7 @@ func _on_action_radius_mouse_exited() -> void:
 
 func _on_cave_playable_area_resource_collected(material_collected: PlayArea.CollectibleMaterials) -> void:
 	materials_inventory[material_collected] += 1
+	inventory_updated.emit(self)
 
 
 func _on_ladder_radius_body_entered(body: Node2D) -> void:
@@ -128,3 +134,8 @@ func _on_ladder_radius_body_entered(body: Node2D) -> void:
 
 func _on_ladder_radius_body_exited(body: Node2D) -> void:
 	on_climbable_surface = false
+
+
+func update_inventory(material: PlayArea.CollectibleMaterials, count: int):
+	materials_inventory[material] = count
+	inventory_updated.emit(self)

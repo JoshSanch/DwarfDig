@@ -145,7 +145,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g6aaj"]
-size = Vector2(128, 128)
+size = Vector2(144, 144)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lnpdw"]
 size = Vector2(13, 20)
@@ -174,11 +174,11 @@ collision_layer = 2
 shape = SubResource("RectangleShape2D_g6aaj")
 debug_color = Color(0.81233, 0.241939, 0.303855, 0.42)
 
-[node name="LadderRadius" type="Area2D" parent="."]
+[node name="EnvironmentInteractionRadius" type="Area2D" parent="."]
 collision_layer = 2
-collision_mask = 8
+collision_mask = 24
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderRadius"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnvironmentInteractionRadius"]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_lnpdw")
 debug_color = Color(0.783049, 0.42375, 0.269974, 0.42)
@@ -186,5 +186,5 @@ debug_color = Color(0.783049, 0.42375, 0.269974, 0.42)
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="mouse_entered" from="ActionRadius" to="." method="_on_action_radius_mouse_entered"]
 [connection signal="mouse_exited" from="ActionRadius" to="." method="_on_action_radius_mouse_exited"]
-[connection signal="body_entered" from="LadderRadius" to="." method="_on_ladder_radius_body_entered"]
-[connection signal="body_exited" from="LadderRadius" to="." method="_on_ladder_radius_body_exited"]
+[connection signal="body_entered" from="EnvironmentInteractionRadius" to="." method="_on_ladder_radius_body_entered"]
+[connection signal="body_exited" from="EnvironmentInteractionRadius" to="." method="_on_ladder_radius_body_exited"]
