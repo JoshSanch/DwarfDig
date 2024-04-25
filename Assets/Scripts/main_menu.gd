@@ -8,7 +8,6 @@ extends Control
 
 
 func _on_play_button_pressed():
-	var new_game = gameroot.instantiate()
 	get_tree().change_scene_to_packed(gameroot)
 
 
