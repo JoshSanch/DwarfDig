@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c45vh8sb253f7"]
+[gd_scene load_steps=29 format=3 uid="uid://c45vh8sb253f7"]
 
 [ext_resource type="PackedScene" uid="uid://dk7ja5p2c7amy" path="res://Scenes/Game/CavePlayableArea.tscn" id="1_4mcgk"]
 [ext_resource type="Resource" uid="uid://bwc8vme4f4dfs" path="res://Assets/MaterialParameters/Wood.tres" id="2_di6c4"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://c6cb2gkf7xxf1" path="res://Scenes/RootUI.tscn" id="8_63vrn"]
 [ext_resource type="Texture2D" uid="uid://cnott5t8hv0fc" path="res://Assets/Textures/Materials/Material - Gold Ore.png" id="8_afutp"]
 [ext_resource type="Texture2D" uid="uid://d0wu2rjy5iajp" path="res://Assets/Textures/Actions/Actions - Descending Rope 16x.png" id="9_j6sro"]
+[ext_resource type="Script" path="res://Assets/Scripts/GoldController.gd" id="16_uv5tl"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r4bfg"]
 
@@ -792,25 +793,26 @@ zoom = Vector2(2.72, 2.72)
 [node name="DwarvenKeep" parent="." instance=ExtResource("3_munqa")]
 position = Vector2(480, -112)
 
-[node name="KingsGoldDisplay" type="Control" parent="DwarvenKeep"]
+[node name="KingsGoldDisplay" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 171.0
-offset_top = -62.0
-offset_right = 211.0
-offset_bottom = -22.0
+offset_left = 651.0
+offset_top = -174.0
+offset_right = 691.0
+offset_bottom = -134.0
+script = ExtResource("16_uv5tl")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DwarvenKeep/KingsGoldDisplay"]
+[node name="HBoxContainer" type="HBoxContainer" parent="KingsGoldDisplay"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TextureRect" type="TextureRect" parent="DwarvenKeep/KingsGoldDisplay/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="KingsGoldDisplay/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("8_afutp")
 stretch_mode = 3
 
-[node name="Label" type="RichTextLabel" parent="DwarvenKeep/KingsGoldDisplay/HBoxContainer"]
+[node name="Label" type="RichTextLabel" parent="KingsGoldDisplay/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -823,5 +825,7 @@ autowrap_mode = 0
 
 [connection signal="resource_collected" from="CavePlayableArea" to="Player" method="_on_cave_playable_area_resource_collected"]
 [connection signal="resource_collected" from="CavePlayableArea" to="RootUi" method="_on_cave_playable_area_resource_collected"]
+[connection signal="inventory_updated" from="Player" to="RootUi" method="_on_player_inventory_updated"]
 [connection signal="player_action_activated" from="Player" to="CavePlayableArea" method="_on_player_player_action_activated"]
 [connection signal="player_selected_action_updated" from="Player" to="RootUi" method="_on_player_player_selected_action_updated"]
+[connection signal="player_entered_king_area" from="DwarvenKeep" to="KingsGoldDisplay" method="_on_dwarven_keep_player_entered_king_area"]
