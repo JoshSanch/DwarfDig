@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3 uid="uid://c6cb2gkf7xxf1"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/UIController.gd" id="1_dh1jr"]
+[ext_resource type="Texture2D" uid="uid://belump2awqml4" path="res://Assets/Textures/UI/Hotbar.png" id="1_t7r43"]
+[ext_resource type="Texture2D" uid="uid://bmh02vd3ugpe3" path="res://Assets/Textures/Materials/Material - WoodPlank.png" id="3_smm3n"]
+[ext_resource type="Texture2D" uid="uid://cytj21pllr4kf" path="res://Assets/Textures/Materials/Material - Stone.png" id="4_qpp2a"]
+[ext_resource type="Texture2D" uid="uid://d0ebxwycvp7ug" path="res://Assets/Textures/Materials/Material - Coal.png" id="5_pqmpu"]
+[ext_resource type="Texture2D" uid="uid://cnott5t8hv0fc" path="res://Assets/Textures/Materials/Material - Gold Ore.png" id="6_lgilv"]
+[ext_resource type="Texture2D" uid="uid://bxvmmbdgs3v88" path="res://Assets/Textures/UI/Hammer Icon.png" id="7_i6ecr"]
+[ext_resource type="Texture2D" uid="uid://luvdo40tt0ph" path="res://Assets/Textures/UI/Pickaxe Icon Highlighted.png" id="8_umoo8"]
+
+[node name="RootUi" type="CanvasLayer"]
+script = ExtResource("1_dh1jr")
+
+[node name="Hotbar" type="TextureRect" parent="."]
+offset_top = 496.0
+offset_right = 320.0
+offset_bottom = 592.0
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_t7r43")
+
+[node name="WoodIcon" type="TextureRect" parent="Hotbar"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 33.3333
+offset_right = 72.0
+offset_bottom = 73.3333
+scale = Vector2(0.73, 0.73)
+texture = ExtResource("3_smm3n")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Hotbar/WoodIcon"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.82648
+offset_top = -20.8219
+offset_right = 38.8265
+offset_bottom = 2.17809
+grow_vertical = 0
+text = "0"
+fit_content = true
+autowrap_mode = 0
+
+[node name="StoneIcon" type="TextureRect" parent="Hotbar"]
+layout_mode = 0
+offset_left = 69.3333
+offset_top = 34.6667
+offset_right = 109.333
+offset_bottom = 74.6667
+scale = Vector2(0.675, 0.675)
+texture = ExtResource("4_qpp2a")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Hotbar/StoneIcon"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.97529
+offset_top = -21.2346
+offset_right = 38.9753
+offset_bottom = 1.76541
+grow_vertical = 0
+text = "0"
+fit_content = true
+autowrap_mode = 0
+
+[node name="CoalIcon" type="TextureRect" parent="Hotbar"]
+layout_mode = 0
+offset_left = 102.0
+offset_top = 32.6667
+offset_right = 142.0
+offset_bottom = 72.6667
+scale = Vector2(0.755, 0.755)
+texture = ExtResource("5_pqmpu")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Hotbar/CoalIcon"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.64901
+offset_top = -21.457
+offset_right = 39.649
+offset_bottom = 1.54305
+grow_vertical = 0
+text = "0"
+fit_content = true
+autowrap_mode = 0
+
+[node name="GoldIcon" type="TextureRect" parent="Hotbar"]
+layout_mode = 0
+offset_left = 137.333
+offset_top = 33.3333
+offset_right = 177.333
+offset_bottom = 73.3333
+scale = Vector2(0.73, 0.73)
+texture = ExtResource("6_lgilv")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Hotbar/GoldIcon"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.73973
+offset_top = -20.8219
+offset_right = 39.7397
+offset_bottom = 2.17809
+grow_vertical = 0
+text = "0"
+fit_content = true
+autowrap_mode = 0
+
+[node name="ActionBuildIcon" type="TextureRect" parent="Hotbar"]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 28.6667
+offset_right = 242.0
+offset_bottom = 68.6667
+texture = ExtResource("7_i6ecr")
+
+[node name="ActionPickaxeIcon" type="TextureRect" parent="Hotbar"]
+layout_mode = 0
+offset_left = 234.667
+offset_top = 28.6667
+offset_right = 274.667
+offset_bottom = 68.6667
+texture = ExtResource("8_umoo8")
