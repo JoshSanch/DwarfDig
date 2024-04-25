@@ -232,6 +232,9 @@ func _on_player_player_action_activated(action: Player.Actions) -> void:
 
 
 func handle_action_dig():
+	# Digging changes the world, enable updates again
+	cave_state_update = true
+
 	var selected_tile_pos = local_to_map(to_local(get_global_mouse_position()))
 	if get_cell_source_id(0, selected_tile_pos) != ROPE_SOURCE_ID:
 		set_cell(0, selected_tile_pos, NULL_TILE_SOURCE_ID)
