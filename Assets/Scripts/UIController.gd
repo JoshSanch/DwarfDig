@@ -21,7 +21,8 @@ func _on_cave_playable_area_resource_collected(material_collected: PlayArea.Coll
 	$Hotbar/CoalIcon/RichTextLabel.text = str(resource_counts[PlayArea.CollectibleMaterials.COAL])
 	$Hotbar/GoldIcon/RichTextLabel.text = str(resource_counts[PlayArea.CollectibleMaterials.GOLD])
 
-func _on_player_player_active_action_updated(action: Player.Actions) -> void:
+
+func _on_player_player_selected_action_updated(action: Player.Actions) -> void:
 	if action == Player.Actions.PICKAXE:
 		$Hotbar/ActionPickaxeIcon.texture = highlighted_pickaxe_texture
 		$Hotbar/ActionBuildIcon.texture = standard_hammer_texture

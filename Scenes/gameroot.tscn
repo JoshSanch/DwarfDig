@@ -32,4 +32,4 @@ position = Vector2(320, -112)
 [connection signal="resource_collected" from="CavePlayableArea" to="Player" method="_on_cave_playable_area_resource_collected"]
 [connection signal="resource_collected" from="CavePlayableArea" to="RootUi" method="_on_cave_playable_area_resource_collected"]
 [connection signal="player_action_activated" from="Player" to="CavePlayableArea" method="_on_player_player_action_activated"]
-[connection signal="player_active_action_updated" from="Player" to="RootUi" method="_on_player_player_active_action_updated"]
+[connection signal="player_selected_action_updated" from="Player" to="RootUi" method="_on_player_player_selected_action_updated"]
