@@ -2,6 +2,7 @@ class_name Player
 
 extends CharacterBody2D
 signal player_action_activated(action: Actions)
+signal player_active_action_updated(action: Actions)
 
 enum Actions {
 	PICKAXE,
@@ -62,7 +63,8 @@ func update_active_action():
 		active_action = Actions.BUILD_ROPE
 	elif Input.is_action_just_pressed("action_context_swap_to_pickaxe"):
 		active_action = Actions.PICKAXE
-
+	
+	player_active_action_updated.emit(active_action)
 
 func handle_animation_state():
 	if velocity.x != 0 and should_update_movement_animation():
@@ -101,4 +103,3 @@ func _on_action_radius_mouse_exited() -> void:
 
 func _on_cave_playable_area_resource_collected(material_collected: PlayArea.CollectibleMaterials) -> void:
 	materials_inventory[material_collected] += 1
-	print(materials_inventory)
