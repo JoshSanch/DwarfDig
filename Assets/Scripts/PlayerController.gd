@@ -33,7 +33,6 @@ func _process(delta: float) -> void:
 	handle_animation_state()
 	if is_mouse_in_action_radius and Input.is_action_just_pressed("action_contextual"):
 		player_action_activated.emit(active_action)
-		print("emitting action %s" % active_action)
 
 
 func _physics_process(delta: float) -> void:
@@ -60,7 +59,7 @@ func update_active_action():
 	if Input.is_action_just_pressed("action_context_swap_to_support"):
 		active_action = Actions.BUILD_SUPPORT
 	elif Input.is_action_just_pressed("action_context_swap_to_rope"):
-		active_action = Actions.BUILD_SUPPORT
+		active_action = Actions.BUILD_ROPE
 	elif Input.is_action_just_pressed("action_context_swap_to_pickaxe"):
 		active_action = Actions.PICKAXE
 
