@@ -2,7 +2,7 @@ class_name Player
 
 extends CharacterBody2D
 signal player_action_activated(action: Actions)
-signal player_active_action_updated(action: Actions)
+signal player_selected_action_updated(action: Actions)
 
 enum Actions {
 	PICKAXE,
@@ -16,7 +16,8 @@ const action_animations = {
 }
 
 @onready var sprite_node: AnimatedSprite2D = $AnimatedSprite2D
-@onready var active_action: Actions = Actions.PICKAXE
+@onready var selected_action: Actions = Actions.PICKAXE
+@onready var active_action = null
 @onready var is_mouse_in_action_radius = false
 @onready var materials_inventory = {
 	PlayArea.CollectibleMaterials.WOOD: 0,
@@ -30,10 +31,12 @@ const action_animations = {
 
 
 func _process(delta: float) -> void:
-	update_active_action()
+	update_selected_action()
+	if is_mouse_in_action_radius and Input.is_action_pressed("action_contextual") and active_action == null:
+		player_action_activated.emit(selected_action)
+		active_action = selected_action
+	
 	handle_animation_state()
-	if is_mouse_in_action_radius and Input.is_action_just_pressed("action_contextual"):
-		player_action_activated.emit(active_action)
 
 
 func _physics_process(delta: float) -> void:
@@ -56,21 +59,28 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func update_active_action():
+func update_selected_action():
 	if Input.is_action_just_pressed("action_context_swap_to_support"):
-		active_action = Actions.BUILD_SUPPORT
+		selected_action = Actions.BUILD_SUPPORT
 	elif Input.is_action_just_pressed("action_context_swap_to_rope"):
-		active_action = Actions.BUILD_ROPE
+		selected_action = Actions.BUILD_ROPE
 	elif Input.is_action_just_pressed("action_context_swap_to_pickaxe"):
-		active_action = Actions.PICKAXE
+		selected_action = Actions.PICKAXE
 	
-	player_active_action_updated.emit(active_action)
+	player_selected_action_updated.emit(selected_action)
+
 
 func handle_animation_state():
-	if velocity.x != 0 and should_update_movement_animation():
-		sprite_node.play("Run")
-	else:
-		sprite_node.play("Idle")
+	if active_action != null and sprite_node.animation not in action_animations:
+		var animation_name := "PickaxeSwing" if active_action == Actions.PICKAXE else "HammerSwing"
+		print_debug(animation_name)
+		sprite_node.play(animation_name)
+
+	if should_update_movement_animation():
+		if velocity.x != 0:
+			sprite_node.play("Run")
+		else:
+			sprite_node.play("Idle")
 
 	# Determine sprite orientation for drawing
 	var direction := Input.get_axis("ui_left", "ui_right")
@@ -91,6 +101,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			sprite_node.play("Run")
 		else:
 			sprite_node.play("Idle")
+		
+		active_action = null
 
 
 func _on_action_radius_mouse_entered() -> void:

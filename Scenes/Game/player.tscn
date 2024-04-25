@@ -88,7 +88,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k5qp3")
 }],
-"loop": true,
+"loop": false,
 "name": &"HammerSwing",
 "speed": 10.0
 }, {
@@ -122,7 +122,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aj4ma")
 }],
-"loop": true,
+"loop": false,
 "name": &"PickaxeSwing",
 "speed": 11.0
 }, {
@@ -161,7 +161,7 @@ shape = SubResource("RectangleShape2D_w71em")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_b27u0")
-animation = &"HammerSwing"
+animation = &"Idle"
 autoplay = "Idle"
 
 [node name="ActionRadius" type="Area2D" parent="."]
