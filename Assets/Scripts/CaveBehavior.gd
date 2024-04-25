@@ -87,13 +87,37 @@ func draw_mouse_interaction_cursor():
 
 
 func update_cave_state():
+	update_rope_bottoms()
 	var loose_dirt_tiles = find_loose_dirt_tiles()
 	for tile_coord in loose_dirt_tiles:
 		var support_factor = calculate_support_factor(tile_coord)
 		if support_factor < support_factor_threshold:
+			print_debug(tile_coord)
 			set_cell(0, tile_coord, NULL_TILE_SOURCE_ID)
 			queued_tiles_to_fall.append(tile_coord)
 			fall_timer.start()
+
+
+func update_rope_bottoms():
+	var new_end_tiles: Array[Vector2i] = []
+	while active_rope_end_tiles:
+		var tile_coord = active_rope_end_tiles.pop_front()
+		if get_cell_source_id(0, Vector2i(tile_coord.x, tile_coord.y + 1)) != NULL_TILE_SOURCE_ID:
+			new_end_tiles.append(tile_coord)
+			continue
+			
+		set_cell(0, tile_coord, ROPE_SOURCE_ID, ROPE_ATLAS_INFINITE_COORD)
+		tile_coord = Vector2i(tile_coord.x, tile_coord.y + 1)
+		while get_cell_source_id(0, tile_coord) == NULL_TILE_SOURCE_ID:
+			var tile_atlas_coord := ROPE_ATLAS_INFINITE_COORD
+			if get_cell_source_id(0, Vector2i(tile_coord.x, tile_coord.y + 1)) != NULL_TILE_SOURCE_ID:
+				tile_atlas_coord = ROPE_ATLAS_FLOOR_COORD
+				new_end_tiles.append(tile_coord)
+			
+			set_cell(0, tile_coord, ROPE_SOURCE_ID, tile_atlas_coord)
+			tile_coord = Vector2i(tile_coord.x, tile_coord.y + 1)
+
+	active_rope_end_tiles = new_end_tiles
 
 
 func find_loose_dirt_tiles() -> Array[Vector2i]:
@@ -208,19 +232,23 @@ func _on_player_player_action_activated(action: Player.Actions) -> void:
 
 
 func handle_action_dig():
+	# Digging changes the world, enable updates again
+	cave_state_update = true
+
 	var selected_tile_pos = local_to_map(to_local(get_global_mouse_position()))
-	set_cell(0, selected_tile_pos, NULL_TILE_SOURCE_ID)
+	if get_cell_source_id(0, selected_tile_pos) != ROPE_SOURCE_ID:
+		set_cell(0, selected_tile_pos, NULL_TILE_SOURCE_ID)
 
-	# Collect materials present at tile position
-	var mined_material_tile_source_id = get_cell_source_id(1, selected_tile_pos)
-	if mined_material_tile_source_id != NULL_TILE_SOURCE_ID:
-		var mined_material: CollectibleMaterials
-		for collectible_material in MATERIAL_ATLAS_MAP:
-			if MATERIAL_ATLAS_MAP[collectible_material] == mined_material_tile_source_id:
-				mined_material = collectible_material
+		# Collect materials present at tile position
+		var mined_material_tile_source_id = get_cell_source_id(1, selected_tile_pos)
+		if mined_material_tile_source_id != NULL_TILE_SOURCE_ID:
+			var mined_material: CollectibleMaterials
+			for collectible_material in MATERIAL_ATLAS_MAP:
+				if MATERIAL_ATLAS_MAP[collectible_material] == mined_material_tile_source_id:
+					mined_material = collectible_material
 
-		resource_collected.emit(mined_material)
-		set_cell(1, selected_tile_pos, NULL_TILE_SOURCE_ID)
+			resource_collected.emit(mined_material)
+			set_cell(1, selected_tile_pos, NULL_TILE_SOURCE_ID)
 
 
 func handle_action_build(action: Player.Actions):
@@ -271,6 +299,7 @@ func place_building(action: Player.Actions, base_build_pos: Vector2i):
 			var tile_atlas_coord := ROPE_ATLAS_INFINITE_COORD
 			if get_cell_source_id(0, Vector2i(current_cell.x, current_cell.y + 1)) != NULL_TILE_SOURCE_ID:
 				tile_atlas_coord = ROPE_ATLAS_FLOOR_COORD
+				active_rope_end_tiles.append(current_cell)
 			
 			set_cell(0, current_cell, ROPE_SOURCE_ID, tile_atlas_coord)
 			current_cell = Vector2i(current_cell.x, current_cell.y + 1)

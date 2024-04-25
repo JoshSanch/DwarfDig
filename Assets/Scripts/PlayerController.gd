@@ -25,9 +25,11 @@ const action_animations = {
 	PlayArea.CollectibleMaterials.GOLD: 0,
 	PlayArea.CollectibleMaterials.COAL: 0
 }
+@onready var on_climbable_surface := false
 
 @export var SPEED = 300.0
 @export var JUMP_VELOCITY = -400.0
+@export var CLIMB_SPEED = 200
 
 
 func _process(delta: float) -> void:
@@ -40,13 +42,17 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	if on_climbable_surface:
+		var climb_direction := Input.get_axis("movement_climb_up", "movement_climb_down")
+		velocity.y = climb_direction * CLIMB_SPEED
+	else:
+		# Add the gravity.
+		if not is_on_floor():
+			velocity += get_gravity() * delta
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		# Handle jump.
+		if Input.is_action_just_pressed("movement_jump") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -73,7 +79,6 @@ func update_selected_action():
 func handle_animation_state():
 	if active_action != null and sprite_node.animation not in action_animations:
 		var animation_name := "PickaxeSwing" if active_action == Actions.PICKAXE else "HammerSwing"
-		print_debug(animation_name)
 		sprite_node.play(animation_name)
 
 	if should_update_movement_animation():
@@ -115,3 +120,11 @@ func _on_action_radius_mouse_exited() -> void:
 
 func _on_cave_playable_area_resource_collected(material_collected: PlayArea.CollectibleMaterials) -> void:
 	materials_inventory[material_collected] += 1
+
+
+func _on_ladder_radius_body_entered(body: Node2D) -> void:
+	on_climbable_surface = true
+
+
+func _on_ladder_radius_body_exited(body: Node2D) -> void:
+	on_climbable_surface = false

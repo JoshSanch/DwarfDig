@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ceaei4g3qhblx"]
+[gd_scene load_steps=26 format=3 uid="uid://ceaei4g3qhblx"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_0vo4v"]
 [ext_resource type="Texture2D" uid="uid://bi0j74huu13w3" path="res://Assets/Textures/Player/Character/HammerSwingSheet.png" id="2_3r2jr"]
@@ -147,6 +147,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g6aaj"]
 size = Vector2(128, 128)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnpdw"]
+size = Vector2(13, 20)
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 7
@@ -165,11 +168,23 @@ animation = &"Idle"
 autoplay = "Idle"
 
 [node name="ActionRadius" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionRadius"]
 shape = SubResource("RectangleShape2D_g6aaj")
 debug_color = Color(0.81233, 0.241939, 0.303855, 0.42)
 
+[node name="LadderRadius" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderRadius"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_lnpdw")
+debug_color = Color(0.783049, 0.42375, 0.269974, 0.42)
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="mouse_entered" from="ActionRadius" to="." method="_on_action_radius_mouse_entered"]
 [connection signal="mouse_exited" from="ActionRadius" to="." method="_on_action_radius_mouse_exited"]
+[connection signal="body_entered" from="LadderRadius" to="." method="_on_ladder_radius_body_entered"]
+[connection signal="body_exited" from="LadderRadius" to="." method="_on_ladder_radius_body_exited"]
